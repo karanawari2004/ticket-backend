@@ -2,7 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const session = require("express-session");
+const dns = require("dns");
+
 require("dotenv").config();
+
+// DNS servers for MongoDB Atlas SRV connection
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 const loginRouter = require("./router/loginRouter");
 const eventRoutes = require("./router/eventRouter");
@@ -132,7 +137,8 @@ async function seedEvents() {
 }
 
 // Connect MongoDB
-const mongoUri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/ticketapp";
+const mongoUri =
+  process.env.MONGO_URI || "mongodb://127.0.0.1:27017/ticketapp";
 
 mongoose
   .connect(mongoUri)
